@@ -76,7 +76,7 @@ def AppointmentCheckByDist():
     select_dist = st.selectbox("Select District",list(district_index.keys()))
     district_id = district_index[select_dist]
 
-    usr_date = st.date_input('Enter Date. I will check the next 7 days from this date as well')
+    usr_date = st.sidebar.date_input('Enter Date. I will check the next 7 days from this date as well')
     date = usr_date.strftime("%d-%m-%Y")
 
 
@@ -97,9 +97,9 @@ def AppointmentCheckByDist():
         sesh = {}
         for center in centers:
             for session in center['sessions']:
-                sesh[session['session_id']] =  [center['name'],center['pincode'],session['date'],center['fee_type'],session['min_age_limit'],session['available_capacity'],session['vaccine'],session['slots']]
+                sesh[session['session_id']] =  [center['name'],center['pincode'],session['date'],center['fee_type'],session['min_age_limit'],session['available_capacity'],session['vaccine']]
             
-        df = pd.DataFrame.from_dict(sesh,orient = 'index',columns = ['Name','Pincode','Date','Fee','Age','Capacity','Vaccine','Timings'])
+        df = pd.DataFrame.from_dict(sesh,orient = 'index',columns = ['Name','Pincode','Date','Fee','Age','Capacity','Vaccine'])
         df.set_index('Name',inplace=True)
         df = df[df['Capacity'] != 0]
 
